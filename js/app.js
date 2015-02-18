@@ -1,5 +1,7 @@
 var app = angular.module('NBA', []);
 
+var REFRESH_RATE = 30*1000;
+
 app.controller('ScoreBoardCtrl', function($scope, $timeout) {
   $scope.update = function() {
     $scope.games = StatsService.DATA.games;
@@ -17,5 +19,5 @@ app.controller('ScoreBoardCtrl', function($scope, $timeout) {
     StatsService.getScoreBoard(function() {
       $scope.update();
     });
-  }, 10*1000); 
+  }, REFRESH_RATE); 
 });
