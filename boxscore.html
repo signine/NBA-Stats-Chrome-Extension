@@ -1,1 +1,192 @@
-<h3> BOXSCORE <h3>
+<h1> BOXSCORE </h1>
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 10px;
+}
+</style>
+
+<body>
+
+<table>
+  <tr>
+    <td></td>
+    <td>Q1</td>   
+    <td>Q2</td>
+    <td>Q3</td>
+    <td>Q4</td>
+    <td>Total</td>
+  </tr>
+  <tr>
+    <td>{{bs.team_1}}</td>
+    <td>{{bs.team_1_scores[0]}}</td>    
+    <td>{{bs.team_1_scores[1]}}</td>    
+    <td>{{bs.team_1_scores[2]}}</td>    
+    <td>{{bs.team_1_scores[3]}}</td>    
+    <td>{{bs.team_1_final}}</td>    
+  </tr>
+  <tr>
+    <td>{{bs.team_2}}</td>
+    <td>{{bs.team_2_scores[0]}}</td>    
+    <td>{{bs.team_2_scores[1]}}</td>    
+    <td>{{bs.team_2_scores[2]}}</td>    
+    <td>{{bs.team_2_scores[3]}}</td>    
+    <td>{{bs.team_2_final}}</td>    
+  </tr>
+</table>
+<p> {{bs.status}} {{bs.time}}</p>
+
+
+<p> Team Stats </p>
+<table>
+  <tr>
+    <td>Team</td>
+    <td>Min</td>
+    <td>FGM - FGA</td>
+    <td>3FGM - 3FGA</td>
+    <td>FTM - FTA</td>
+    <td>+/-</td>
+    <td>Off Reb</td>
+    <td>Def Reb</td>
+    <td>Reb</td>
+    <td>Ast</td>
+    <td>PF</td>
+    <td>STL</td>
+    <td>TO</td>
+    <td>BLK</td>
+    <td>PTS</td>
+  </tr> 
+  <tr>
+    <td>{{bs.team_1}}</td>
+    <td>{{bs.team_1_stats[0]}}</td>
+    <td>{{bs.team_1_stats[1]}}</td>
+    <td>{{bs.team_1_stats[2]}}</td>
+    <td>{{bs.team_1_stats[3]}}</td>
+    <td>{{bs.team_1_stats[4]}}</td>
+    <td>{{bs.team_1_stats[5]}}</td>
+    <td>{{bs.team_1_stats[6]}}</td>
+    <td>{{bs.team_1_stats[7]}}</td>
+    <td>{{bs.team_1_stats[8]}}</td>
+    <td>{{bs.team_1_stats[9]}}</td>
+    <td>{{bs.team_1_stats[10]}}</td>
+    <td>{{bs.team_1_stats[11]}}</td>
+    <td>{{bs.team_1_stats[12]}}</td>
+    <td>{{bs.team_1_stats[13]}}</td>
+    <td>{{bs.team_1_stats[14]}}</td>
+  </tr>
+  <tr>
+    <td>{{bs.team_2}}</td>
+    <td>{{bs.team_2_stats[0]}}</td>
+    <td>{{bs.team_2_stats[1]}}</td>
+    <td>{{bs.team_2_stats[2]}}</td>
+    <td>{{bs.team_2_stats[3]}}</td>
+    <td>{{bs.team_2_stats[4]}}</td>
+    <td>{{bs.team_2_stats[5]}}</td>
+    <td>{{bs.team_2_stats[6]}}</td>
+    <td>{{bs.team_2_stats[7]}}</td>
+    <td>{{bs.team_2_stats[8]}}</td>
+    <td>{{bs.team_2_stats[9]}}</td>
+    <td>{{bs.team_2_stats[10]}}</td>
+    <td>{{bs.team_2_stats[11]}}</td>
+    <td>{{bs.team_2_stats[12]}}</td>
+    <td>{{bs.team_2_stats[13]}}</td>
+    <td>{{bs.team_2_stats[14]}}</td>
+  </tr>
+</table>
+
+<p>Player Stats</p>
+
+<p>{{bs.team_1}}</p>
+
+<table>
+  <tr>
+    <td>Name</td>
+    <td>Pos</td>
+    <td>Min</td>
+    <td>FGM - FGA</td>
+    <td>3FGM - 3FGA</td>
+    <td>FTM - FTA</td>
+    <td>+/-</td>
+    <td>Off Reb</td>
+    <td>Def Reb</td>
+    <td>Reb</td>
+    <td>Ast</td>
+    <td>PF</td>
+    <td>STL</td>
+    <td>TO</td>
+    <td>BLK</td>
+    <td>PTS</td>
+  </tr> 
+<tbody ng-repeat="p in bs.team_1_players"> 
+  <tr>
+    <td>{{p[0]}}</td>
+    <td>{{p[1]}}</td>
+    <td>{{p[2]}}</td>
+    <td>{{p[3]}}</td>
+    <td>{{p[4]}}</td>
+    <td>{{p[5]}}</td>
+    <td>{{p[6]}}</td>
+    <td>{{p[7]}}</td>
+    <td>{{p[8]}}</td>
+    <td>{{p[9]}}</td>
+    <td>{{p[10]}}</td>
+    <td>{{p[11]}}</td>
+    <td>{{p[12]}}</td>
+    <td>{{p[13]}}</td>
+    <td>{{p[14]}}</td>
+    <td>{{p[15]}}</td>
+    <td>{{p[16]}}</td>
+  </tr>
+</tbody>
+</table>
+
+
+<p>{{bs.team_2}}</p>
+
+<table>
+  <tr>
+    <td>Name</td>
+    <td>Pos</td>
+    <td>Min</td>
+    <td>FGM - FGA</td>
+    <td>3FGM - 3FGA</td>
+    <td>FTM - FTA</td>
+    <td>+/-</td>
+    <td>Off Reb</td>
+    <td>Def Reb</td>
+    <td>Reb</td>
+    <td>Ast</td>
+    <td>PF</td>
+    <td>STL</td>
+    <td>TO</td>
+    <td>BLK</td>
+    <td>PTS</td>
+  </tr> 
+<tbody ng-repeat="p in bs.team_2_players"> 
+  <tr>
+    <td>{{p[0]}}</td>
+    <td>{{p[1]}}</td>
+    <td>{{p[2]}}</td>
+    <td>{{p[3]}}</td>
+    <td>{{p[4]}}</td>
+    <td>{{p[5]}}</td>
+    <td>{{p[6]}}</td>
+    <td>{{p[7]}}</td>
+    <td>{{p[8]}}</td>
+    <td>{{p[9]}}</td>
+    <td>{{p[10]}}</td>
+    <td>{{p[11]}}</td>
+    <td>{{p[12]}}</td>
+    <td>{{p[13]}}</td>
+    <td>{{p[14]}}</td>
+    <td>{{p[15]}}</td>
+    <td>{{p[16]}}</td>
+  </tr>
+</tbody>
+</table>
+
+</body>
+</html>

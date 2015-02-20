@@ -91,7 +91,6 @@ s.parsePlayerStats = function(team, players) {
     pstats.push(p[5]); // Name
     pstats.push(p[6]); // Pos 
     pstats.push(p[8]); // Min 
-    pstats.push(p[8]); // Min 
     pstats.push(p[9] + "-" + p[10]); // FGM - FGA
     pstats.push(p[12] + "-" + p[13]); // 3FGM - 3FGA
     pstats.push(p[15] + "-" + p[16]); // FTA - FTM 
@@ -104,7 +103,7 @@ s.parsePlayerStats = function(team, players) {
     pstats.push(p[22]); // STL
     pstats.push(p[24]); // TO
     pstats.push(p[23]); // BLK
-    pstats.push(p[26]); // PYS 
+    pstats.push(p[26]); // PTS 
 
     ret.push(pstats);
   }

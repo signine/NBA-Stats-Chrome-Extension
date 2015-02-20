@@ -28,7 +28,8 @@ ctrl.controller('ScoreBoardCtrl', function($scope, $timeout) {
 
 ctrl.controller('BoxscoreCtrl', function($scope, $routeParams) {
   StatsService.getBoxscore($routeParams.gameId, function(boxscore) {
-    $scope.boxscore = boxscore;   
+    $scope.bs = boxscore;   
+    $scope.$apply();
     console.log(bscore);
   });
 });
