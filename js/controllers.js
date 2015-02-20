@@ -25,3 +25,10 @@ ctrl.controller('ScoreBoardCtrl', function($scope, $timeout) {
     refresher_set = true;
   }
 });
+
+ctrl.controller('BoxscoreCtrl', function($scope, $routeParams) {
+  StatsService.getBoxscore($routeParams.gameId, function(boxscore) {
+    $scope.boxscore = boxscore;   
+    console.log(bscore);
+  });
+});
