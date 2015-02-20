@@ -7,6 +7,38 @@ s.DATA = new Object();
 s.DATA.ready = false;
 s.DATA.boxscore = {};
 
+var teamData = new Array();
+teamData["Boston Celtics"] = ["#01ad3a", "BC.png"]
+teamData["Dallas Mavericks"] = ["#10aef8", "DM.png"]
+teamData["Brooklyn Nets"] = ["#3d3d3d", "BN.png"]
+teamData["Houston Rockets"] = ["#e62a11", "HR.png"]
+teamData["New York Knicks"] = ["#e68e11", "NYK.png"]
+teamData["Memphis Grizzlies"] = ["#123d53", "MG.png"]
+teamData["Philadelphia 76ers"] = ["#e01251", "P7.png"]
+teamData["New Orleans Pelicans"] = ["#459c80", "NOP.png"]
+teamData["Toronto Raptors"] = ["#861634", "TR.png"]
+teamData["San Antonio Spurs"] = ["#6c6c6c", "SAS.png"]
+teamData["Chicago Bulls"] = ["#d91515", "CB.png"]
+teamData["Denver Nuggets"] = ["#eeb509", "DN.png"]
+teamData["Cleveland Cavaliers"] = ["#c94955", "CC.png"]
+teamData["Minnesota Timberwolves"] = ["#0d920a", "MT.png"]
+teamData["Detroit Pistons"] = ["#d74257", "DP.png"]
+teamData["Oklahoma City Thunder"] = ["#15b5ea", "OKC.png"]
+teamData["Indiana Pacers"] = ["#cfb650", "IP.png"]
+teamData["Portland Trail Blazers"] = ["#5d0f24", "PTB.png"]
+teamData["Milwaukee Bucks"] = ["#0f5d12", "MB.png"]
+teamData["Utah Jazz"] = ["#437f9b", "UJ.png"]
+teamData["Atlanta Hawks"] = ["#772a2a", "AH.png"]
+teamData["Golden State Warriors"] = ["#0145ad", "GSW.png"]
+teamData["Charlotte Hornets"] = ["#204b69", "CH.png"]
+teamData["Los Angeles Clippers"] = ["#cd1ad4", "LAC.png"]
+teamData["Miami Heat"] = ["#c5002e", "MH.png"]
+teamData["Los Angeles Lakers"] = ["#7d00c5", "LAL.png"]
+teamData["Orlando Magic"] = ["#1480f8", "OM.png"]
+teamData["Phoenix Suns"] = ["#f8a014", "PS.png"]
+teamData["Washington Wizards"] = ["#1480f8", "WW.png"]
+teamData["Sacramento Kings"] = ["#480974", "SK.png"]
+
 s.make_request = function(url, params, callback) {
   $.ajax({
     url: url,
@@ -19,7 +51,8 @@ s.make_request = function(url, params, callback) {
 }
 
 s.getTodaysDate = function() {
-  var d = new Date();
+  //var d = new Date(); //For today
+  var d = new Date(new Date().setDate(new Date().getDate()-1)); //For yesterday
   return d.toLocaleDateString();
 }
 
@@ -48,6 +81,11 @@ s.parseScoreboard = function(data) {
     }
     game.team_2 = line_score[5];
     game.team_2_score = line_score[21];
+
+    game.team_1_colour = teamData[game.team_1][0];
+    game.team_1_icon = teamData[game.team_1][1];
+    game.team_2_colour = teamData[game.team_2][0];
+    game.team_2_icon = teamData[game.team_2][1];
 
     s.DATA.games.push(game);
   }
