@@ -8,7 +8,6 @@ s.DATA.ready = false;
 s.DATA.boxscore = {};
 
 s.make_request = function(url, params, callback) {
-  console.log(url);
   $.ajax({
     url: url,
     jsonp: 'callback',
