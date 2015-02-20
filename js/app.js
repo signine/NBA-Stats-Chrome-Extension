@@ -1,23 +1,15 @@
-var app = angular.module('NBA', []);
+var app = angular.module('NBA', ['ngRoute', 'Controllers']);
 
-var REFRESH_RATE = 30*1000;
+app.config(['$routeProvider', 
+    function($routeProvider) {
+      $routeProvider.
+        when('/boxscore/:gameid', {
+          templateUrl: 'boxscore.html',
+          controller: 'BoxscoreCtrl'
+        }).
+        otherwise({
+          templateUrl: 'scoreboard.html',
+          controller: 'ScoreBoardCtrl'
+        });
+    }]);
 
-app.controller('ScoreBoardCtrl', function($scope, $timeout) {
-  $scope.update = function() {
-    $scope.games = StatsService.DATA.games;
-    $scope.refresh += 1;
-    $scope.$apply();
-  };
-
-  StatsService.getScoreBoard(function() {
-    $scope.games = StatsService.DATA.games;
-    $scope.refresh = 0;
-    $scope.update();
-  });
-
-  setInterval(function() {
-    StatsService.getScoreBoard(function() {
-      $scope.update();
-    });
-  }, REFRESH_RATE); 
-});

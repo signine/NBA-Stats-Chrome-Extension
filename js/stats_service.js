@@ -54,7 +54,7 @@ s.parseScoreboard = function(data) {
 
 s.getScoreBoard = function(callback) {
   var url = s.BASE_URL + s.SCORE_BOARD_URL;
-  s.make_request(url, {'GameDate': '01/22/2015'}, function(data) {
+  s.make_request(url, {'GameDate': s.getTodaysDate()}, function(data) {
     s.parseScoreboard(data); 
     callback();
   });
