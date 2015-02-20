@@ -1,6 +1,6 @@
 var ctrl = angular.module('Controllers', []) 
 
-var REFRESH_RATE = 30*1000;
+var REFRESH_RATE = 60*1000;
 
 var refresher_set = false;
 ctrl.controller('ScoreBoardCtrl', function($scope, $timeout) {

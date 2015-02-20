@@ -8,6 +8,7 @@ s.DATA.ready = false;
 s.DATA.boxscore = {};
 
 s.make_request = function(url, params, callback) {
+  console.log(url);
   $.ajax({
     url: url,
     jsonp: 'callback',
@@ -24,7 +25,6 @@ s.getTodaysDate = function() {
 }
 
 s.parseScoreboard = function(data) {
-  console.log(data);
   s.DATA.games = [];
   
   for (id in data.resultSets[0].rowSet) {
@@ -32,6 +32,7 @@ s.parseScoreboard = function(data) {
     var game = new Object();
     game.id = _data[2];
     game.status = _data[4];
+    game.time = _data[10];
 
     var line_score = '';;
     var j = 0;
@@ -115,6 +116,8 @@ s.parsePlayerStats = function(team, players) {
 s.parseBoxscore = function(data) {
   bscore = new Object();
   bscore.status = data.resultSets[0].rowSet[0][4];
+  bscore.time = data.resultSets[0].rowSet[0][10];
+  
 
   // Summary
   bscore.team_1 = data.resultSets[1].rowSet[0][5];
