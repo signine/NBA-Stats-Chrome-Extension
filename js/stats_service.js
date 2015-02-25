@@ -39,6 +39,41 @@ teamData["Phoenix Suns"] = ["#f8a014", "PS.png"];
 teamData["Washington Wizards"] = ["#1480f8", "WW.png"];
 teamData["Sacramento Kings"] = ["#480974", "SK.png"];
 
+var TeamFullNames = 
+{
+  "BOS": "Boston Celtics",
+  "DAL": "Dallas Mavericks",
+  "BKN": "Brooklyn Nets",
+  "HOU": "Huston Rockets",
+  "NYK": "New York Knicks",
+  "MEM": "Memphis Grizzlies",
+  "PHI": "Philadelphia 76ers",
+  "NOP": "New Orleans Pelicans",
+  "TOR": "Toronto Raptors",
+  "SAS": "San Antonio Spurs",
+  "CHI": "Chicago Bulls",
+  "DEN": "Denver Nuggets",
+  "CLE": "Cleveland Cavaliers",
+  "MIN": "Minnesota Timberwolves",
+  "DET": "Detroit Pistons",
+  "OKC": "Oklahoma Thunder",
+  "IND": "Indiana Pacers",
+  "POR": "Portland Trail Blazers",
+  "MIL": "Milwaukee Bucks",
+  "UTA": "Utah Jazz",
+  "ATL": "Atlanta Hawks",
+  "GSW": "Golden State Warriors",
+  "CHA": "Charlotte Hornets",
+  "LAC": "Los Angeles Clippers",
+  "LAL": "Los Angeles Lakers",
+  "MIA": "Miami Heat",
+  "ORL": "Orlando Magic",
+  "PHX": "Phoenix Suns",
+  "WAS": "Washington Wizards",
+  "SAC": "Sacramento Kings"
+}
+
+
 s.make_request = function(url, params, callback) {
   $.ajax({
     url: url,
@@ -72,14 +107,14 @@ s.parseScoreboard = function(data) {
       line_score = data.resultSets[1].rowSet[j];
       if (line_score[2] == game.id) { break }
     }
-    game.team_1 = line_score[5];
+    game.team_1 = TeamFullNames[line_score[4]];
     game.team_1_score = line_score[21];
 
     for (j++ ;j < data.resultSets[1].rowSet.length; j++) {
       line_score = data.resultSets[1].rowSet[j];
       if (line_score[2] == game.id) { break }
     }
-    game.team_2 = line_score[5];
+    game.team_2 = TeamFullNames[line_score[4]];
     game.team_2_score = line_score[21];
 
     //game.team_1_colour = teamData[game.team_1][0];
@@ -99,6 +134,8 @@ s.getScoreBoard = function(callback) {
   });
 }
 
+
+/*
 s.parseTeamStats = function(stats) {
   var ret = []
   ret.push(stats[5]); //MIN
@@ -182,3 +219,4 @@ s.getBoxscore = function(game_id, callback) {
     callback(boxscore);
   });
 }
+*/

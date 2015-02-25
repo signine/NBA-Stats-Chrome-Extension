@@ -12,6 +12,7 @@
   "permissions": [
     "activeTab",
     "https://ajax.googleapis.com/",
-    "http://stats.nba.com/stats/*"
+    "http://stats.nba.com/stats/*",
+    "http://nba.com/games/*"
   ]
 }

@@ -26,6 +26,7 @@ ctrl.controller('ScoreBoardCtrl', function($scope, $timeout) {
   }
 });
 
+/*
 ctrl.controller('BoxscoreCtrl', function($scope, $routeParams) {
   StatsService.getBoxscore($routeParams.gameId, function(boxscore) {
     $scope.bs = boxscore;   
@@ -33,3 +34,4 @@ ctrl.controller('BoxscoreCtrl', function($scope, $routeParams) {
     console.log(bscore);
   });
 });
+*/
