@@ -11,7 +11,7 @@
         <button class='btn'>></button>
       </div>
       <div ng-repeat="game in games" class='score'>
-        <a href="http://www.nba.com/games/20150222/CLENYK/gameinfo.html">
+        <a ng-click='openBoxscore(game.id);'>
         <div class='scoreline'><img style='vertical-align: middle;' src='http://i.imgur.com/ZsvZ2Hr.png'><team style='color: #0245ac;'>{{game.team_1}}</team> <score style='float: right;'>{{game.team_1_score}}</score></div>
         <hr>
         <div class='scoreline'><img style='vertical-align: middle;' src='http://i.imgur.com/PRWfSSP.png'><team style='color: #861634;'>{{game.team_2}}</team> <score style='float: right;'>{{game.team_2_score}}</score></div>

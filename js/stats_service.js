@@ -2,6 +2,8 @@ StatsService = new Object();
 var s = StatsService;
 s.BASE_URL = 'http://stats.nba.com/stats/';
 s.URLS = {'scoreboard': 'scoreboard', 'boxscore': 'boxscore'}
+s.BOXSCORE_BASE = "http://www.nba.com/games/";
+s.BOXSCORE_END = "/gameinfo.html";
 s.DEFAULT_PARAMS = {'LeagueID': '00', 'DayOffset': 0, 'RangeType': 0, 'StartRange': 0, 'EndRange': 0, 'StartPeriod': 0, 'EndPeriod': 0};
 s.DATA = new Object();
 s.DATA.ready = false;
@@ -92,7 +94,7 @@ s.getTodaysDate = function() {
 }
 
 s.parseScoreboard = function(data) {
-  s.DATA.games = [];
+  s.DATA.games = {}; 
   
   for (id in data.resultSets[0].rowSet) {
     _data = data.resultSets[0].rowSet[id];
@@ -100,6 +102,7 @@ s.parseScoreboard = function(data) {
     game.id = _data[2];
     game.status = _data[4];
     game.time = _data[10];
+    game.boxscore_link = s.BOXSCORE_BASE + _data[5] + s.BOXSCORE_END; 
 
     var line_score = '';;
     var j = 0;
@@ -122,7 +125,7 @@ s.parseScoreboard = function(data) {
     //game.team_2_colour = teamData[game.team_2][0];
     //game.team_2_icon = teamData[game.team_2][1];
 
-    s.DATA.games.push(game);
+    s.DATA.games[game.id] = game;
   }
 }
 

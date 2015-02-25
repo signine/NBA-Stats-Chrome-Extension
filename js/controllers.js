@@ -24,6 +24,12 @@ ctrl.controller('ScoreBoardCtrl', function($scope, $timeout) {
     }, REFRESH_RATE); 
     refresher_set = true;
   }
+
+  $scope.openBoxscore = function(gameId) {
+    var game = StatsService.DATA.games[gameId];
+    console.log(game.boxscore_link);
+    chrome.tabs.create({ url: game.boxscore_link });
+  }
 });
 
 /*
