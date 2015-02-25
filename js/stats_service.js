@@ -47,7 +47,7 @@ var TeamFullNames =
   "BOS": "Boston Celtics",
   "DAL": "Dallas Mavericks",
   "BKN": "Brooklyn Nets",
-  "HOU": "Huston Rockets",
+  "HOU": "Houston Rockets",
   "NYK": "New York Knicks",
   "MEM": "Memphis Grizzlies",
   "PHI": "Philadelphia 76ers",
@@ -59,7 +59,7 @@ var TeamFullNames =
   "CLE": "Cleveland Cavaliers",
   "MIN": "Minnesota Timberwolves",
   "DET": "Detroit Pistons",
-  "OKC": "Oklahoma Thunder",
+  "OKC": "Oklahoma City Thunder",
   "IND": "Indiana Pacers",
   "POR": "Portland Trail Blazers",
   "MIL": "Milwaukee Bucks",
@@ -114,10 +114,12 @@ s.parseScoreboard = function(date, data) {
     game.team_2 = TeamFullNames[line_score[4]];
     game.team_2_score = line_score[21];
 
-    //game.team_1_colour = teamData[game.team_1][0];
-    //game.team_1_icon = teamData[game.team_1][1];
-    //game.team_2_colour = teamData[game.team_2][0];
-    //game.team_2_icon = teamData[game.team_2][1];
+    console.log("Trying.."+game.team_1);
+    game.team_1_colour = teamData[game.team_1][0];
+    game.team_1_icon = chrome.extension.getURL("imgs/"+teamData[game.team_1][1]);
+    console.log("Trying.."+game.team_2)
+    game.team_2_colour = teamData[game.team_2][0];
+    game.team_2_icon = chrome.extension.getURL("imgs/"+teamData[game.team_2][1]);
     games[game.id] = game;
   }
   s.DATA.games[date.toDateString()] = games;

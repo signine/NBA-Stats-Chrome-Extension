@@ -92,3 +92,7 @@ hr {
   text-decoration: none;
   cursor: pointer;
 }
+
+.btn:focus {
+  outline: 0;
+  }

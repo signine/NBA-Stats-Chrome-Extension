@@ -1,24 +1,23 @@
   <link rel="stylesheet" href="css/scoreboard.css">
   <body ng-controller="ScoreBoardCtrl">
   <div class='container'>
-    <div style='width: 650px; margin-bottom: 4%;'>
+    <div style='width: 750px; margin-bottom: 4%;'>
       <div style='width: 100%; height: 35px;'>
-        <h2 style='float: left;'>Today's Games</h2>
+        <h2 style='float: left;'>All NBA Games</h2>
         <button class='btn' ng-click='prevDate()'><</button>
         <h3 ng-repeat='date in supported_dates' ng-class="{true: 'current', false: ''}[date == current_date]">{{date.toDateString()}}</h3>
         <button class='btn' ng-click='nextDate()'>></button>
       </div>
       <div ng-repeat="game in games" class='score'>
         <a ng-click='openBoxscore(game.id);'>
-        <div class='scoreline'><img style='vertical-align: middle;' src='http://i.imgur.com/ZsvZ2Hr.png'><team style='color: #0245ac;'>{{game.team_1}}</team> <score style='float: right;'>{{game.team_1_score}}</score></div>
+        <div class='scoreline'><img style='vertical-align: middle; width:20px; height: 20px; padding-right: 3px;' src='{{game.team_1_icon}}'><team style='color: {{game.team_1_colour}};'>{{game.team_1}}</team> <score style='float: right;'>{{game.team_1_score}}</score></div>
         <hr>
-        <div class='scoreline'><img style='vertical-align: middle;' src='http://i.imgur.com/PRWfSSP.png'><team style='color: #861634;'>{{game.team_2}}</team> <score style='float: right;'>{{game.team_2_score}}</score></div>
+        <div class='scoreline'><img style='vertical-align: middle; width:20px; height:20px; padding-right: 3px;' src='{{game.team_2_icon}}'><team style='color: {{game.team_2_colour}};'>{{game.team_2}}</team> <score style='float: right;'>{{game.team_2_score}}</score></div>
         <center style="font-size: 9px; font-weight: bold;">{{game.status}} {{game.time}}</center>
 	   </a>
       </div>
 
       <br/>
-      <p>{{refresh}}</p>
     </div>
     </div>
   </body>
