@@ -114,10 +114,8 @@ s.parseScoreboard = function(date, data) {
     game.team_2 = TeamFullNames[line_score[4]];
     game.team_2_score = line_score[21];
 
-    console.log("Trying.."+game.team_1);
     game.team_1_colour = teamData[game.team_1][0];
     game.team_1_icon = chrome.extension.getURL("imgs/"+teamData[game.team_1][1]);
-    console.log("Trying.."+game.team_2)
     game.team_2_colour = teamData[game.team_2][0];
     game.team_2_icon = chrome.extension.getURL("imgs/"+teamData[game.team_2][1]);
     games[game.id] = game;

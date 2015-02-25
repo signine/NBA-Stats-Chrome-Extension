@@ -40,8 +40,6 @@ ctrl.controller('ScoreBoardCtrl', function($scope, $timeout) {
 
   $scope.load_scoreboard($scope.current_date);
 
-  $scope.load_scoreboard($scope.current_date);
-
   if (refresher_set == false) {
     setInterval(function() {
       StatsService.getScoreBoard($scope.todays_date, false, function() {
@@ -55,7 +53,6 @@ ctrl.controller('ScoreBoardCtrl', function($scope, $timeout) {
 
   $scope.openBoxscore = function(gameId) {
     var game = StatsService.DATA.games[$scope.current_date.toDateString()][gameId];
-    console.log(game.boxscore_link);
     chrome.tabs.create({ url: game.boxscore_link });
   }
 });
