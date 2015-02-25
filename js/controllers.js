@@ -1,32 +1,60 @@
+function getDate(offset) {
+  var d = new Date(new Date().setDate(new Date().getDate() + offset)); 
+  return d;
+}
 var ctrl = angular.module('Controllers', []) 
 
 var REFRESH_RATE = 60*1000;
 
 var refresher_set = false;
-ctrl.controller('ScoreBoardCtrl', function($scope, $timeout) {
-  $scope.update = function() {
-    $scope.games = StatsService.DATA.games;
-    $scope.refresh += 1;
-    $scope.$apply();
-  };
 
-  StatsService.getScoreBoard(function() {
-    $scope.games = StatsService.DATA.games;
-    $scope.refresh = 0;
-    $scope.update();
-  });
+ctrl.controller('ScoreBoardCtrl', function($scope, $timeout) {
+  $scope.supported_dates = [getDate(-1), getDate(0), getDate(1)];
+  $scope.todays_date = $scope.supported_dates[1]; 
+  $scope.current_date = $scope.supported_dates[1]; 
+  $scope.current_date_id = 1;
+  $scope.refresh = 0;
+
+  $scope.load_scoreboard = function(date) {
+    StatsService.getScoreBoard(date, false, function() {
+      $scope.games = StatsService.DATA.games[date.toDateString()];
+      $scope.$apply();
+    });
+  }
+
+  $scope.prevDate = function() {
+    if ($scope.current_date_id > 0) {
+      $scope.current_date_id--;
+      $scope.current_date = $scope.supported_dates[$scope.current_date_id];
+      $scope.load_scoreboard($scope.current_date);
+    }
+  }
+
+  $scope.nextDate = function() {
+    if ($scope.current_date_id < 2) {
+      $scope.current_date_id++;
+      $scope.current_date = $scope.supported_dates[$scope.current_date_id];
+      $scope.load_scoreboard($scope.current_date);
+    }
+  }
+
+  $scope.load_scoreboard($scope.current_date);
+
+  $scope.load_scoreboard($scope.current_date);
 
   if (refresher_set == false) {
     setInterval(function() {
-      StatsService.getScoreBoard(function() {
-        $scope.update();
+      StatsService.getScoreBoard($scope.todays_date, false, function() {
+        $scope.games = StatsService.DATA.games[$scope.supported_dates[1].toDateString()];
+        $scope.refresh += 1;
+        $scope.$apply();
       });
     }, REFRESH_RATE); 
     refresher_set = true;
   }
 
   $scope.openBoxscore = function(gameId) {
-    var game = StatsService.DATA.games[gameId];
+    var game = StatsService.DATA.games[$scope.current_date.toDateString()][gameId];
     console.log(game.boxscore_link);
     chrome.tabs.create({ url: game.boxscore_link });
   }

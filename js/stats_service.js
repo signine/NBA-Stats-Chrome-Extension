@@ -7,7 +7,8 @@ s.BOXSCORE_END = "/gameinfo.html";
 s.DEFAULT_PARAMS = {'LeagueID': '00', 'DayOffset': 0, 'RangeType': 0, 'StartRange': 0, 'EndRange': 0, 'StartPeriod': 0, 'EndPeriod': 0};
 s.DATA = new Object();
 s.DATA.ready = false;
-s.DATA.boxscore = {};
+//s.DATA.boxscore = {};
+s.DATA.games = {};
 
 var teamData = new Array();
 teamData["Boston Celtics"] = ["#01ad3a", "BC.png"];
@@ -87,15 +88,8 @@ s.make_request = function(url, params, callback) {
   });
 }
 
-s.getTodaysDate = function() {
-  //var d = new Date(); //For today
-  var d = new Date(new Date().setDate(new Date().getDate()-1)); //For yesterday
-  return d.toLocaleDateString();
-}
-
-s.parseScoreboard = function(data) {
-  s.DATA.games = {}; 
-  
+s.parseScoreboard = function(date, data) {
+  var games = {}; 
   for (id in data.resultSets[0].rowSet) {
     _data = data.resultSets[0].rowSet[id];
     var game = new Object();
@@ -124,15 +118,20 @@ s.parseScoreboard = function(data) {
     //game.team_1_icon = teamData[game.team_1][1];
     //game.team_2_colour = teamData[game.team_2][0];
     //game.team_2_icon = teamData[game.team_2][1];
-
-    s.DATA.games[game.id] = game;
+    games[game.id] = game;
   }
+  s.DATA.games[date.toDateString()] = games;
 }
 
-s.getScoreBoard = function(callback) {
+s.getScoreBoard = function(date, force, callback) {
+  if (!force && s.DATA.games[date.toDateString()]) {
+    callback()
+    return;
+  }
+
   var url = s.BASE_URL + s.URLS['scoreboard'];
-  s.make_request(url, {'GameDate': s.getTodaysDate()}, function(data) {
-    s.parseScoreboard(data); 
+  s.make_request(url, {'GameDate': date.toLocaleDateString()}, function(data) {
+    s.parseScoreboard(date, data); 
     callback();
   });
 }
