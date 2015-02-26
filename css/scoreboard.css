@@ -96,3 +96,11 @@ hr {
 .btn:focus {
   outline: 0;
   }
+
+.recap {
+  text-decoration: underline;
+}
+
+.recap:hover {
+  cursor: pointer;
+  }
