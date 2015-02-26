@@ -15,8 +15,8 @@ ctrl.controller('ScoreBoardCtrl', function($scope, $timeout) {
   $scope.current_date_id = 1;
   $scope.refresh = 0;
 
-  $scope.load_scoreboard = function(date) {
-    StatsService.getScoreBoard(date, false, function() {
+  $scope.load_scoreboard = function(date, force) {
+    StatsService.getScoreBoard(date, force, function() {
       $scope.games = StatsService.DATA.games[date.toDateString()];
       $scope.$apply();
     });
@@ -26,7 +26,7 @@ ctrl.controller('ScoreBoardCtrl', function($scope, $timeout) {
     if ($scope.current_date_id > 0) {
       $scope.current_date_id--;
       $scope.current_date = $scope.supported_dates[$scope.current_date_id];
-      $scope.load_scoreboard($scope.current_date);
+      $scope.load_scoreboard($scope.current_date, false);
     }
   }
 
@@ -34,15 +34,15 @@ ctrl.controller('ScoreBoardCtrl', function($scope, $timeout) {
     if ($scope.current_date_id < 2) {
       $scope.current_date_id++;
       $scope.current_date = $scope.supported_dates[$scope.current_date_id];
-      $scope.load_scoreboard($scope.current_date);
+      $scope.load_scoreboard($scope.current_date, false);
     }
   }
 
-  $scope.load_scoreboard($scope.current_date);
+  $scope.load_scoreboard($scope.current_date, true);
 
   if (refresher_set == false) {
     setInterval(function() {
-      StatsService.getScoreBoard($scope.todays_date, false, function() {
+      StatsService.getScoreBoard($scope.todays_date, true, function() {
         $scope.games = StatsService.DATA.games[$scope.supported_dates[1].toDateString()];
         $scope.refresh += 1;
         $scope.$apply();
