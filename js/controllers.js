@@ -13,11 +13,10 @@ ctrl.controller('ScoreBoardCtrl', function($scope, $timeout) {
   $scope.todays_date = $scope.supported_dates[1]; 
   $scope.current_date = $scope.supported_dates[1]; 
   $scope.current_date_id = 1;
-  $scope.refresh = 0;
 
-  $scope.load_scoreboard = function(date, force) {
-    StatsService.getScoreBoard(date, force, function() {
-      $scope.games = StatsService.DATA.games[date.toDateString()];
+  $scope.load_scoreboard = function(date_index) {
+    StatsService.getScoreBoard(function() {
+      $scope.games = StatsService.DATA.games[date_index];
       $scope.$apply();
     });
   }
@@ -26,7 +25,7 @@ ctrl.controller('ScoreBoardCtrl', function($scope, $timeout) {
     if ($scope.current_date_id > 0) {
       $scope.current_date_id--;
       $scope.current_date = $scope.supported_dates[$scope.current_date_id];
-      $scope.load_scoreboard($scope.current_date, false);
+      $scope.load_scoreboard($scope.current_date_id);
     }
   }
 
@@ -34,35 +33,23 @@ ctrl.controller('ScoreBoardCtrl', function($scope, $timeout) {
     if ($scope.current_date_id < 2) {
       $scope.current_date_id++;
       $scope.current_date = $scope.supported_dates[$scope.current_date_id];
-      $scope.load_scoreboard($scope.current_date, false);
+      $scope.load_scoreboard($scope.current_date_id);
     }
   }
 
-  $scope.load_scoreboard($scope.current_date, true);
+  $scope.load_scoreboard($scope.current_date_id);
 
   if (refresher_set == false) {
     setInterval(function() {
-      StatsService.getScoreBoard($scope.todays_date, true, function() {
-        $scope.games = StatsService.DATA.games[$scope.supported_dates[1].toDateString()];
-        $scope.refresh += 1;
+      StatsService.updateScoreboard(function() {
+        $scope.games = StatsService.DATA.games[1]; // Today's date id
         $scope.$apply();
       });
     }, REFRESH_RATE); 
     refresher_set = true;
   }
 
-  $scope.openBoxscore = function(gameId) {
-    var game = StatsService.DATA.games[$scope.current_date.toDateString()][gameId];
-    chrome.tabs.create({ url: game.boxscore_link });
+  $scope.openBoxscore = function(boxscore_link) {
+    chrome.tabs.create({ url: boxscore_link });
   }
 });
-
-/*
-ctrl.controller('BoxscoreCtrl', function($scope, $routeParams) {
-  StatsService.getBoxscore($routeParams.gameId, function(boxscore) {
-    $scope.bs = boxscore;   
-    $scope.$apply();
-    console.log(bscore);
-  });
-});
-*/
