@@ -1,44 +1,43 @@
 StatsService = new Object(); 
 var s = StatsService;
-s.SCOREBOARD_URL = 'http://stats.tsn.ca/GET/urn:tsn:nba:scoreboard'
-s.BOXSCORE_BASE = "http://www.nba.com/games/";
-s.BOXSCORE_END = "/gameinfo.html";
-s.DEFAULT_PARAMS = {'type': 'json'}
+s.BASE_URL = 'http://nba-stats-si.herokuapp.com/v1'
+s.ENDPOINTS = {'scoreboard': '/scoreboard', 'current_scores': '/scoreboard/current_scores'}
+
 s.DATA = new Object();
-s.DATA.games = new Array();
+s.DATA.games = {};
 
 var teamData = 
 {
-  "Celtics" : ["Boston Celtics", "BOS", "#01ad3a", "BC.png"],
-  "Mavericks" : ["Dallas Mavericks", "DAL", "#10aef8", "DM.png"],
-  "Nets" : ["Brooklyn Nets", "BKN", "#3d3d3d", "BN.png"],
-  "Rockets" : ["Houston Rockets","HOU", "#e62a11", "HR.png"],
-  "Knicks" : ["New York Knicks","NYK", "#e68e11", "NYK.png"],
-  "Grizzlies" : ["Memphis Grizzlies","MEM", "#123d53", "MG.png"],
-  "76ers" : ["Philadelphia 76ers","PHI", "#e01251", "P7.png"],
-  "Pelicans" : ["New Orleans Pelicans","NOP", "#459c80", "NOP.png"],
-  "Raptors" : ["Toronto Raptors", "TOR", "#861634", "TR.png"],
-  "Spurs" : ["San Antonio Spurs", "SAS", "#6c6c6c", "SAS.png"],
-  "Bulls" : ["Chicago Bulls", "CHI", "#d91515", "CB.png"],
-  "Nuggets" : ["Denver Nuggets", "DEN", "#eeb509", "DN.png"],
-  "Cavaliers" : ["Cleveland Cavaliers", "CLE", "#c94955", "CC.png"],
-  "Timberwolves" : ["Minnesota Timberwolves", "MIN", "#0d920a", "MT.png"],
-  "Pistons" : ["Detroit Pistons", "DET", "#d74257", "DP.png"],
-  "Thunder" : ["Oklahoma City Thunder", "OKC", "#15b5ea", "OKC.png"],
-  "Pacers" : ["Indiana Pacers", "IND",  "#cfb650", "IP.png"],
-  "Trail Blazers" : ["Portland Trail Blazers","POR", "#5d0f24", "PTB.png"],
-  "Bucks" : ["Milwaukee Bucks", "MIL", "#0f5d12", "MB.png"],
-  "Jazz" : ["Utah Jazz", "UTA", "#437f9b", "UJ.png"],
-  "Hawks" : ["Atlanta Hawks", "ATL", "#772a2a", "AH.png"],
-  "Warriors" : ["Golden State Warriors", "GSW", "#0145ad", "GSW.png"],
-  "Hornets" : ["Charlotte Hornets", "CHA", "#204b69", "CH.png"],
-  "Clippers" : ["Los Angeles Clippers","LAC", "#cd1ad4", "LAC.png"],
-  "Heat" : ["Miami Heat", "MIA", "#c5002e", "MH.png"],
-  "Lakers" : ["Los Angeles Lakers", "LAL", "#7d00c5", "LAL.png"],
-  "Magic" : ["Orlando Magic", "ORL", "#1480f8", "OM.png"],
-  "Suns" : ["Phoenix Suns", "PHX", "#f8a014", "PS.png"],
-  "Wizards" : ["Washington Wizards", "WAS", "#1480f8", "WW.png"],
-  "Kings" : ["Sacramento Kings", "SAC", "#480974", "SK.png"]
+  "BOS" : ["Boston Celtics", "BOS", "#01ad3a", "BC.png"],
+  "DAL" : ["Dallas Mavericks", "DAL", "#10aef8", "DM.png"],
+  "BKN" : ["Brooklyn Nets", "BKN", "#3d3d3d", "BN.png"],
+  "HOU" : ["Houston Rockets","HOU", "#e62a11", "HR.png"],
+  "NYK" : ["New York Knicks","NYK", "#e68e11", "NYK.png"],
+  "MEM" : ["Memphis Grizzlies","MEM", "#123d53", "MG.png"],
+  "PHI" : ["Philadelphia 76ers","PHI", "#e01251", "P7.png"],
+  "NOP" : ["New Orleans Pelicans","NOP", "#459c80", "NOP.png"],
+  "TOR" : ["Toronto Raptors", "TOR", "#861634", "TR.png"],
+  "SAS" : ["San Antonio Spurs", "SAS", "#6c6c6c", "SAS.png"],
+  "CHI" : ["Chicago Bulls", "CHI", "#d91515", "CB.png"],
+  "DEN" : ["Denver Nuggets", "DEN", "#eeb509", "DN.png"],
+  "CLE" : ["Cleveland Cavaliers", "CLE", "#c94955", "CC.png"],
+  "MIN" : ["Minnesota Timberwolves", "MIN", "#0d920a", "MT.png"],
+  "DET" : ["Detroit Pistons", "DET", "#d74257", "DP.png"],
+  "OKC" : ["Oklahoma City Thunder", "OKC", "#15b5ea", "OKC.png"],
+  "IND" : ["Indiana Pacers", "IND",  "#cfb650", "IP.png"],
+  "POR" : ["Portland Trail Blazers","POR", "#5d0f24", "PTB.png"],
+  "MIL" : ["Milwaukee Bucks", "MIL", "#0f5d12", "MB.png"],
+  "UTA" : ["Utah Jazz", "UTA", "#437f9b", "UJ.png"],
+  "ATL" : ["Atlanta Hawks", "ATL", "#772a2a", "AH.png"],
+  "GSW" : ["Golden State Warriors", "GSW", "#0145ad", "GSW.png"],
+  "CHA" : ["Charlotte Hornets", "CHA", "#204b69", "CH.png"],
+  "LAC" : ["Los Angeles Clippers","LAC", "#cd1ad4", "LAC.png"],
+  "MIA" : ["Miami Heat", "MIA", "#c5002e", "MH.png"],
+  "LAL" : ["Los Angeles Lakers", "LAL", "#7d00c5", "LAL.png"],
+  "ORL" : ["Orlando Magic", "ORL", "#1480f8", "OM.png"],
+  "PHX" : ["Phoenix Suns", "PHX", "#f8a014", "PS.png"],
+  "WAS" : ["Washington Wizards", "WAS", "#1480f8", "WW.png"],
+  "SAC" : ["Sacramento Kings", "SAC", "#480974", "SK.png"]
 }
 
 s.make_request = function(url, params, callback) {
@@ -52,65 +51,58 @@ s.make_request = function(url, params, callback) {
   });
 }
 
-/* team_1 = away team
- * team_2 = home team
- */
-s.getBoxscoreUrl = function(date, team_1, team_2) {
-  var dateString = date.getFullYear();
-  dateString += date.getMonth() < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1; 
-  dateString += date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-
-  var url = s.BOXSCORE_BASE + dateString + "/" + team_1 + team_2 + s.BOXSCORE_END;
-  return url;
+s.format_date = function(date) {
+  var date_string = "";
+  date_string += (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+  date_string += "/" + (date.getDate() < 10 ? "0" + date.getDate() : date.getDate());
+  date_string += "/" + date.getFullYear();
+  return date_string;
 }
 
-s.parseGame = function(game_data) {
-  var game = new Object();
-  game.status = game_data.StateDetails;
+s.process_game = function(game) {
+  game["team_1_name"] = teamData[game["team_1"]][0]; // Full name
+  game["team_1_icon"] = chrome.extension.getURL("imgs/" + teamData[game['team_1']][3]);
+  game["team_1_colour"] = teamData[game["team_1"]][2];
 
-  game.team_1_name = game_data.Away.Team.Name;
-  game.team_1_code = teamData[game.team_1_name][1];
-  game.team_1 = teamData[game.team_1_name][0]; // Full Name
-  game.team_1_score = game_data.Away.Linescore.Score;
-  game.team_1_colour = teamData[game.team_1_name][2];
-  game.team_1_icon = chrome.extension.getURL("imgs/" + teamData[game.team_1_name][3]);
-
-  game.team_2_name = game_data.Home.Team.Name;
-  game.team_2_code = teamData[game.team_2_name][1];
-  game.team_2 = teamData[game.team_2_name][0]; // Full name
-  game.team_2_score = game_data.Home.Linescore.Score;
-  game.team_2_colour = teamData[game.team_2_name][2];
-  game.team_2_icon = chrome.extension.getURL("imgs/" + teamData[game.team_2_name][3]);
-
-  game.boxscore = s.getBoxscoreUrl(new Date(game_data.Date), game.team_1_code, game.team_2_code);
-  return game;
+  game["team_2_name"] = teamData[game["team_2"]][0]; // Full name
+  game["team_2_icon"] = chrome.extension.getURL("imgs/" + teamData[game['team_2']][3]);
+  game["team_2_colour"] = teamData[game["team_2"]][2]; 
 }
 
-s.parseScoreboard = function(data) { 
-  for (day in data) {
-    var games = [];
-    for (i in data[day]['Games']) {
-      games.push(s.parseGame(data[day]['Games'][i]));
-    }
-    s.DATA.games[day] = games;
+s.getScoreBoard = function(dates, callback) {
+  var qdates = []
+  for (d in dates) {
+    if (!s.DATA.games[dates[d]]) { qdates.push(dates[d]); }
   }
-}
 
-s.getScoreBoard = function(callback) {
-  s.make_request(s.SCOREBOARD_URL, {}, function(data) {
-    s.parseScoreboard(data); 
+  if (qdates.length == 0) {
+    callback();
+    return;
+  }
+
+  var url = s.BASE_URL + s.ENDPOINTS['scoreboard'];
+  var date_formatted = [];
+  for (d in qdates) { date_formatted.push(s.format_date(qdates[d])); }
+  date_formatted = JSON.stringify(date_formatted);
+
+  s.make_request(url, {dates: date_formatted}, function(data) {
+    for (d in data['scoreboard']) {
+      for (g in data['scoreboard'][d]) {
+        s.process_game(data['scoreboard'][d][g]);
+      }
+      s.DATA.games[dates[d]] = data['scoreboard'][d];
+    }
     callback();
   });
 }
 
 /* Update current day's scores */
-s.updateScoreboard = function(callback) {
+s.updateCurrentScores = function(callback) {
+  var url = s.BASE_URL + s.ENDPOINTS['current_scores'];
+  var today = s.format_date(new Date());
   s.make_request(s.SCOREBOARD_URL, {}, function(data) {
-    var games = [];
-    for (i in data[1]['Games']) {
-      games.push(s.parseGame(data[1]['Games'][i]));
-    }
-    s.DATA.games[1] = games;
+    s.DATA.games[today] = data['current_scores'];
+
     callback();
   });
 }

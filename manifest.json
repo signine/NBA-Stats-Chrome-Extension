@@ -12,7 +12,6 @@
   "permissions": [
     "tabs",
     "https://ajax.googleapis.com/",
-    "http://stats.nba.com/stats/*",
-    "http://nba.com/games/*"
+    "http://nba-stats-si.herokuapp.com/v1/*"
   ]
 }

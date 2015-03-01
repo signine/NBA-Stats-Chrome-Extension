@@ -9,10 +9,10 @@
         <button class='btn' ng-click='nextDate()'>></button>
       </div>
       <div ng-repeat="game in games" class='score'>
-        <a ng-click='openBoxscore(game.boxscore);'>
-        <div class='scoreline'><img style='vertical-align: middle; width:20px; height: 20px; padding-right: 3px;' src='{{game.team_1_icon}}'><team style='color: {{game.team_1_colour}};'>{{game.team_1}}</team> <score style='float: right;'>{{game.team_1_score}}</score></div>
+        <a ng-click='openBoxscore(game.boxscore_link);'>
+        <div class='scoreline'><img style='vertical-align: middle; width:20px; height: 20px; padding-right: 3px;' src='{{game.team_1_icon}}'><team style='color: {{game.team_1_colour}};'>{{game.team_1_name}}</team> <score style='float: right;'>{{game.team_1_score}}</score></div>
         <hr>
-        <div class='scoreline'><img style='vertical-align: middle; width:20px; height:20px; padding-right: 3px;' src='{{game.team_2_icon}}'><team style='color: {{game.team_2_colour}};'>{{game.team_2}}</team> <score style='float: right;'>{{game.team_2_score}}</score></div>
+        <div class='scoreline'><img style='vertical-align: middle; width:20px; height:20px; padding-right: 3px;' src='{{game.team_2_icon}}'><team style='color: {{game.team_2_colour}};'>{{game.team_2_name}}</team> <score style='float: right;'>{{game.team_2_score}}</score></div>
         <center style="font-size: 9px; font-weight: bold;"><a class='recap' ng-click='openBoxscore(game.boxscore);'>{{game.status}} {{game.time}}</a></center>
       </div>
 
