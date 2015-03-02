@@ -15,7 +15,7 @@ ctrl.controller('ScoreBoardCtrl', function($scope, $timeout) {
 
   $scope.load_scoreboard = function(dates) {
     StatsService.getScoreBoard(dates, function() {
-      $scope.games = StatsService.DATA.games[$scope.current_date];
+      $scope.games = StatsService.DATA.games[$scope.current_date.toDateString()];
       $scope.$apply();
     });
   }
@@ -41,8 +41,10 @@ ctrl.controller('ScoreBoardCtrl', function($scope, $timeout) {
   if (refresher_set == false) {
     setInterval(function() {
       StatsService.updateCurrentScores(function() {
-        $scope.games = StatsService.DATA.games[$scope.supported_dates[1]]; // Today's date id
-        $scope.$apply();
+        if ($scope.current_date.toDateString() == (new Date()).toDateString()) {
+          $scope.games = StatsService.DATA.games[$scope.supported_dates[1].toDateString()]; // Today's date id
+          $scope.$apply();
+        }
       });
     }, REFRESH_RATE); 
     refresher_set = true;

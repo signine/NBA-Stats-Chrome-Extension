@@ -59,6 +59,12 @@ s.format_date = function(date) {
   return date_string;
 }
 
+s.process_games = function(games) {
+   for (g in games) {
+     s.process_game(games[g]);
+   }
+}
+
 s.process_game = function(game) {
   game["team_1_name"] = teamData[game["team_1"]][0]; // Full name
   game["team_1_icon"] = chrome.extension.getURL("imgs/" + teamData[game['team_1']][3]);
@@ -72,7 +78,7 @@ s.process_game = function(game) {
 s.getScoreBoard = function(dates, callback) {
   var qdates = []
   for (d in dates) {
-    if (!s.DATA.games[dates[d]]) { qdates.push(dates[d]); }
+    if (!s.DATA.games[dates[d].toDateString()]) { qdates.push(dates[d]); }
   }
 
   if (qdates.length == 0) {
@@ -87,10 +93,8 @@ s.getScoreBoard = function(dates, callback) {
 
   s.make_request(url, {dates: date_formatted}, function(data) {
     for (d in data['scoreboard']) {
-      for (g in data['scoreboard'][d]) {
-        s.process_game(data['scoreboard'][d][g]);
-      }
-      s.DATA.games[dates[d]] = data['scoreboard'][d];
+      s.process_games(data['scoreboard'][d])
+      s.DATA.games[qdates[d].toDateString()] = data['scoreboard'][d];
     }
     callback();
   });
@@ -99,10 +103,10 @@ s.getScoreBoard = function(dates, callback) {
 /* Update current day's scores */
 s.updateCurrentScores = function(callback) {
   var url = s.BASE_URL + s.ENDPOINTS['current_scores'];
-  var today = s.format_date(new Date());
-  s.make_request(s.SCOREBOARD_URL, {}, function(data) {
+  var today = (new Date()).toDateString(); 
+  s.make_request(url, {}, function(data) {
+    s.process_games(data['current_scores'])
     s.DATA.games[today] = data['current_scores'];
-
     callback();
   });
 }
